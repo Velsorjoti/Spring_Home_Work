@@ -1,26 +1,31 @@
 package org.example.model;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
-
+@Component
 public class Person {
-    private Car car;
-
-    public Person(Car car) {
-        this.car = car;
+    private Transport transport;
+    @Autowired
+    public Person( @Qualifier("car") Transport transport) {
+        this.transport = transport;
     }
 
     public void sitdown() {
         System.out.println("Владелец сел на автомобиль");
-        car.go();
+        transport.go();
     }
 
-    public Car getCar() {
-        return car;
+    public Transport getTransport() {
+        return transport;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setTransport(Transport transport) {
+        this.transport = transport;
     }
 
     @Override
@@ -28,19 +33,18 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(car, person.car);
+        return Objects.equals(transport, person.transport);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(car);
+        return Objects.hash(transport);
     }
 
     @Override
     public String toString() {
         return "Person{" +
-                "car=" + car +
+                "transport=" + transport +
                 '}';
     }
-
 }
